@@ -15,6 +15,11 @@ export class OrderEntity {
   public orderId!: string;
 
   @Column({
+    type: 'int',
+  })
+  public nbProducts!: number;
+
+  @Column({
     type: 'varchar',
     default: 'Pending',
   })

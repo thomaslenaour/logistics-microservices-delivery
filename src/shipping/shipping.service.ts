@@ -6,13 +6,15 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class ShippingService {
-    constructor(@InjectRepository(OrderEntity) private readonly repo: Repository<OrderEntity>) { }
-    
-    public async create(shippingRequestDto: ShippingRequestDto) {
-        
-        const order = this.repo.create(shippingRequestDto);
-        await this.repo.save(order);
+  constructor(
+    @InjectRepository(OrderEntity)
+    private readonly repo: Repository<OrderEntity>,
+  ) {}
 
-        return order;
-    }
+  public async create(shippingRequestDto: ShippingRequestDto) {
+    const order = this.repo.create(shippingRequestDto);
+    await this.repo.save(order);
+
+    return order;
+  }
 }

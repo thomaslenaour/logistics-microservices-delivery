@@ -15,7 +15,6 @@ export class ShippingController {
   @Post()
   @HttpCode(204)
   async create(@Body() shippingRequestDto: ShippingRequestDto) {
-
     if (!shippingRequestDto.orderId || !shippingRequestDto.nbProducts) {
       throw new HttpException(
         'Bad request ! An ordre must have an orderId and nbProducts property.',
@@ -23,6 +22,8 @@ export class ShippingController {
       );
     }
 
-    return this.shippingService.create(shippingRequestDto);
+    this.shippingService.create(shippingRequestDto);
+
+    // TODO : Check for send orders
   }
 }
