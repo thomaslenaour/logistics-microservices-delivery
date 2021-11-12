@@ -22,8 +22,21 @@ export class ShippingController {
       );
     }
 
-    this.shippingService.create(shippingRequestDto);
+    await this.shippingService.create(shippingRequestDto);
 
     // TODO : Check for send orders
+    const pendingOrders = await this.shippingService.getPendingOrder();
+
+    const totalProducts = pendingOrders
+      .map((order) => order.nbProducts)
+      .reduce((acc, value) => acc + value);
+
+    if (totalProducts >= 5) {
+      console.log(
+        `Hey ! We need to ship ${totalProducts} products for customers !`,
+      );
+
+      // Call patch method(pendingOrders)
+    }
   }
 }
