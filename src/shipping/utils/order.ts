@@ -15,11 +15,13 @@ export class OrderAction {
     }
   }
 
-  public async updateOrder(order: OrderEntity) {
+  public async updateOrders(orders: OrderEntity[]) {
     await this.checkService();
 
-    await axios.patch<UpdateOrderDto>(`${apiUrl}/order/${order.orderId}`, {
-      status: 'pending',
+    orders.map(async (order) => {
+      await axios.patch<UpdateOrderDto>(`${apiUrl}/order/${order.orderId}`, {
+        status: 'pending',
+      });
     });
   }
 }
