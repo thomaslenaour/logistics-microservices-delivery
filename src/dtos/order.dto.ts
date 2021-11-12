@@ -18,10 +18,12 @@ export class OrderDetailsDto extends BaseDto {
   public products!: PurchasedProductDto[];
 }
 
-export class OrderCreatedDto extends OmitType(OrderDetailsDto, [
-  'status',
-  'products',
-]) {}
+export class OrderCreatedDto extends BaseDto {
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  public orderId!: string;
+}
 
 export class PurchasedProductDto {
   @ApiProperty()
