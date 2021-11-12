@@ -5,12 +5,17 @@ import {
   HttpException,
   Post,
 } from '@nestjs/common';
+
+import { OrderService } from 'src/order/order.service';
 import { ShippingRequestDto } from '../dtos';
 import { ShippingService } from './shipping.service';
 
 @Controller('shipping')
 export class ShippingController {
-  constructor(private readonly shippingService: ShippingService) {}
+  constructor(
+    private readonly shippingService: ShippingService,
+    private readonly orderService: OrderService,
+  ) {}
 
   @Post()
   @HttpCode(204)
@@ -28,19 +33,17 @@ export class ShippingController {
 
     await this.shippingService.create(shippingRequestDto);
 
-    // TODO : Check for send orders
     const pendingOrders = await this.shippingService.getPendingOrder();
-
     const totalProducts = pendingOrders
       .map((order) => order.nbProducts)
       .reduce((acc, value) => acc + value);
 
     if (totalProducts >= 5) {
-      console.log(
-        `Hey ! We need to ship ${totalProducts} products for customers !`,
-      );
-
-      // Call patch method(pendingOrders)
+      try {
+        await this.orderService.updateOrders(pendingOrders);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 }
