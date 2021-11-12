@@ -15,7 +15,11 @@ export class ShippingController {
   @Post()
   @HttpCode(204)
   async create(@Body() shippingRequestDto: ShippingRequestDto) {
-    if (!shippingRequestDto.orderId || !shippingRequestDto.nbProducts) {
+    if (
+      !shippingRequestDto.orderId ||
+      !shippingRequestDto.nbProducts ||
+      !shippingRequestDto.products
+    ) {
       throw new HttpException(
         'Bad request ! An ordre must have an orderId and nbProducts property.',
         400,
