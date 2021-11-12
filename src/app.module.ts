@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
+import { CoreModule } from './core/core.module';
 
-import { PingController } from './ping/ping.controller';
+import { DatabaseModule } from './database/database.module';
+import { PingModule } from './ping/ping.module';
 
 @Module({
-  imports: [],
-  controllers: [PingController],
+  imports: [CoreModule, DatabaseModule, PingModule],
 })
 export class AppModule {}
