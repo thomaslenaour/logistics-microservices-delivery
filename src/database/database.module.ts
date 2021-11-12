@@ -4,11 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoreModule } from '../core/core.module';
 import { ConfigService } from '../core/services/config.service';
 import * as Entities from './entities';
-import { OrderEntity } from './entities';
 
 const entities = Object.values(Entities);
-
-console.log('entities', entities);
 
 @Module({
   imports: [
