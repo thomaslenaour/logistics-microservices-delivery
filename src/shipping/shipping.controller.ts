@@ -6,21 +6,23 @@ import {
   Post,
 } from '@nestjs/common';
 import { ShippingRequestDto } from '../dtos';
+import { ShippingService } from './shipping.service';
 
 @Controller('shipping')
 export class ShippingController {
-  // Gérer la requête en POST qui devra matcher avec le ShippingRequestDto
+  constructor(private readonly shippingService: ShippingService) {}
+
   @Post()
   @HttpCode(204)
-  create(@Body() body: ShippingRequestDto) {
-    console.log(typeof body);
-    // Si ça ne match pas, on renvoi une erreur
-    if (!body.orderId || !body.nbProducts) {
+  async create(@Body() shippingRequestDto: ShippingRequestDto) {
+
+    if (!shippingRequestDto.orderId || !shippingRequestDto.nbProducts) {
       throw new HttpException(
         'Bad request ! An ordre must have an orderId and nbProducts property.',
         400,
       );
     }
-    // Sinon, retour 204 et appel du service pour l'insérer en bdd
+
+    return this.shippingService.create(shippingRequestDto);
   }
 }
