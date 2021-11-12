@@ -17,4 +17,9 @@ export class ShippingService {
 
     return order;
   }
+
+  public async getPendingOrder() {
+    const pendingOrders = this.repo.find({ where: { status: 'Pending' } });
+    return pendingOrders;
+  }
 }
