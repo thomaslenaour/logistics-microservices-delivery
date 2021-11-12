@@ -1,4 +1,5 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
+import { ProductEntity } from './product.entity';
 
 @Entity('Order')
 export class OrderEntity {
@@ -18,6 +19,11 @@ export class OrderEntity {
     type: 'int',
   })
   public nbProducts!: number;
+
+  @OneToMany(() => ProductEntity, (product) => product.order, {
+    cascade: ['insert'],
+  })
+  products: ProductEntity[];
 
   @Column({
     type: 'varchar',
