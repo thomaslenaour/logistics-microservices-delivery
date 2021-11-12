@@ -14,10 +14,14 @@ export class OrderEntity {
   })
   public orderId!: string;
 
-  // @Column({
-  //   type: 'enum',
-  //   enum: ['Pending', 'Delivered'],
-  //   default: 'Pending',
-  // })
-  // public status!: string;
+  @Column({
+    type: 'int',
+  })
+  public nbProducts!: number;
+
+  @Column({
+    type: 'varchar',
+    default: 'Pending',
+  })
+  public status!: string;
 }
