@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column, OneToMany, JoinColumn } from 'typeorm';
 import { ProductEntity } from './product.entity';
 
 @Entity('Order')
@@ -23,7 +23,8 @@ export class OrderEntity {
   @OneToMany(() => ProductEntity, (product) => product.order, {
     cascade: ['insert'],
   })
-  products: ProductEntity[];
+  @JoinColumn()
+  public products!: ProductEntity[];
 
   @Column({
     type: 'varchar',

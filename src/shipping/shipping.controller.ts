@@ -40,9 +40,13 @@ export class ShippingController {
 
     if (totalProducts >= 5) {
       try {
-        await this.orderService.updateOrders(pendingOrders);
+        const readyOrders = await this.orderService.updateOrders(pendingOrders);
+        const editedOrders = await this.shippingService.updatePendingOrders(
+          readyOrders,
+        );
+        await this.orderService.sendNotification(editedOrders);
       } catch (error) {
-        console.log(error);
+        console.log('erorrr');
       }
     }
   }
