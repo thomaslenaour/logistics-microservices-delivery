@@ -14,6 +14,8 @@ export class ShippingRequestDto extends BaseDto {
   @IsNumber()
   public nbProducts!: number;
 
+  @ApiProperty()
+  @IsNotEmpty()
   public products: ProductEntity[];
 }
 

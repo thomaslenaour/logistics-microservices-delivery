@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { OrderEntity } from '.';
 
 @Entity('Product')
@@ -21,5 +21,5 @@ export class ProductEntity {
   public quantity!: number;
 
   @ManyToOne(() => OrderEntity, (order) => order.products)
-  order: OrderEntity;
+  public order!: OrderEntity;
 }

@@ -20,17 +20,21 @@ export class ShippingService {
   }
 
   public async getPendingOrder() {
-    const pendingOrders = this.repo.find({ where: { status: 'Pending' } });
+    const pendingOrders = this.repo.find({
+      where: { status: 'Pending' },
+      relations: ['products'],
+    });
+
     return pendingOrders;
   }
 
   public async updatePendingOrders(orders: OrderEntity[]) {
-    const result = await Promise.all(
+    await Promise.all(
       orders.map((order) => {
         order.status = 'Delivered';
-        this.repo.update(order.id, order);
+        this.repo.save(order);
       }),
     );
-    return result;
+    return orders;
   }
 }
